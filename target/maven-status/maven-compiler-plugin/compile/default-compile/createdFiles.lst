@@ -1,0 +1,12 @@
+com\mybatis\dao\impl\TbClassImpl.class
+com\mybatis\dao\impl\StuDaoImpl.class
+com\mybatis\utils\MybatisUtil.class
+com\mybatis\entity\TbStu.class
+com\mybatis\utils\Ergodic.class
+com\mybatis\entity\TbClass.class
+com\mybatis\web\TbClassAction.class
+com\mybatis\web\StuAction.class
+com\mybatis\dao\StuDao.class
+com\mybatis\dao\TbClassDao.class
+com\mybatis\service\TbClassService.class
+com\mybatis\service\StuService.class

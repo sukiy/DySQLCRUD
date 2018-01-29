@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper用于映射dao的接口，namespace指定Dao接口的完整类名 -->
+<mapper namespace="com.mybatis.dao.StuDao">
+    <!--自定义实体类中属性和查询结果集的映射关系-->
+    <resultMap id="clsMap" type="tbClass">
+        <id column="cno" property="cno"/>
+        <result column="cname" property="cname"/>
+    </resultMap>
+
+    <resultMap id="stuMap" type="tbStu">
+        <id column="sno" property="sno"/>
+        <result column="sname" property="sname"/>
+        <result column="sage" property="sage"/>
+        <result column="sex" property="sex"/>
+        <!--配置多对一的映射关系-->
+        <association property="cls" resultMap="clsMap"/>
+    </resultMap>
+
+    <!--添加学生-->
+    <insert id="addStu" parameterType="tbStu">
+        INSERT INTO tb_stu(sname,sage,sex,scno) VALUES (#{sname},#{sage},#{sex},#{cls.cno})
+    </insert>
+
+    <!--查询学生-->
+    <select id="findStuList" resultMap="stuMap">
+        SELECT s.sname,s.sage,s.sex,c.cname,s.sno FROM tb_stu s LEFT JOIN tb_class c ON s.scno=c.cno order by c.cname
+    </select>
+
+    <!--根据id查询学生-->
+    <select id="findStuById" parameterType="int" resultMap="stuMap">
+        SELECT stu.*,c.cno FROM tb_stu s left join tb_class c ON s.scno=c.cno where sno=#{sno}
+    </select>
+
+    <!--修改学生-->
+    <update id="updateStu" parameterType="tbStu">
+        UPDATE tb_stu
+          <set>
+              <if test="sname!=null">
+                  sname=#{sname}
+              </if>
+              <if test="sage!=null">
+                  sage=#{sage}
+              </if>
+              <if test="sex!=null">
+                  sex=#{sex}
+              </if>
+              <if test="scno!=null">
+                  scno=#{cls.cno}
+              </if>
+          </set>
+          <if test="sno!=null">
+                where sno=#{sno}
+          </if>
+    </update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
