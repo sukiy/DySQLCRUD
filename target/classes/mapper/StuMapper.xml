@@ -31,30 +31,37 @@
 
     <!--根据id查询学生-->
     <select id="findStuById" parameterType="int" resultMap="stuMap">
-        SELECT stu.*,c.cno FROM tb_stu s left join tb_class c ON s.scno=c.cno where sno=#{sno}
+        SELECT s.*,c.cno FROM tb_stu s left join tb_class c ON s.scno=c.cno where sno=#{sno}
     </select>
 
     <!--修改学生-->
     <update id="updateStu" parameterType="tbStu">
         UPDATE tb_stu
           <set>
-              <if test="sname!=null">
-                  sname=#{sname}
-              </if>
-              <if test="sage!=null">
-                  sage=#{sage}
-              </if>
-              <if test="sex!=null">
-                  sex=#{sex}
-              </if>
-              <if test="scno!=null">
-                  scno=#{cls.cno}
-              </if>
+              <trim suffixOverrides=",">/*把最后一个逗号去掉*/
+                  <if test="sname!=null">
+                      sname=#{sname},
+                  </if>
+                  <if test="sage!=null">
+                      sage=#{sage},
+                  </if>
+                  <if test="sex!=null">
+                      sex=#{sex},
+                  </if>
+                  <if test="cls!=null and cls.cno!=null">
+                      scno=#{cls.cno},
+                  </if>
+              </trim>
           </set>
           <if test="sno!=null">
                 where sno=#{sno}
           </if>
     </update>
+
+    <!--删除学生-->
+    <delete id="deleteStu" parameterType="tbStu">
+        DELETE FROM tb_stu where sno=#{sno}
+    </delete>
 </mapper>
 
 

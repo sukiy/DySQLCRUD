@@ -62,10 +62,25 @@ public class StuAction {
     @RequestMapping("/doUpdate")
     @ResponseBody
     public int doUpdate(TbStu stu){
-        if (stuService.updateStu(stu)){
+         if (stuService.updateStu(stu)){
             return 1;
         } else {
             return 0;
+        }
+    }
+
+    /**
+     * 删除学生
+     * @param stu
+     * @return
+     */
+    @RequestMapping("/deleteStu")
+    public String deleteStu(TbStu stu){
+        if (stuService.deleteStu(stu)){
+            return "forward:/stuList.jsp";
+
+        }else {
+            return "forward:/stuList.jsp";
         }
     }
 

@@ -14,7 +14,7 @@
 <body>
 <h2>修改学生</h2>
 <form id="frm">
-             <input type="hidden" name="sno">
+             <input type="hidden" name="sno" value="${stu.sno}">
     学生姓名：<input name="sname" value="${stu.sname}"><br>
     学生年龄：<input name="sage" value="${stu.sage}"><br>
     学生性别：<input type="radio" name="sex" value="男"/>男
@@ -27,6 +27,7 @@
 </body>
 </html>
 <script type="text/javascript">
+    /*绑定性别*/
     var s = document.getElementsByName("sex");
     var ms = "${stu.sex}";
     ms == '男' ? s[0].checked = true : s[1].checked = true;
@@ -40,11 +41,11 @@
                 var option="<option value='"+v.cno+"'>"+v.cname+"</option>";
                 $("#cname").append(option);
             });
+             /*绑定班级*/
             var opt = $("select[name='cls.cno'] option");
             var cls = "${stu.cls.cno}";
-            console.log(opt,cls);
             for(var i=0; i < opt.length; i++){
-                if(opt[i].value = cls){
+                if(opt[i].value == cls){
                     opt[i].selected = true;
                 }
             }
@@ -55,6 +56,19 @@
  
     /*异步修改学生*/
     $("#btn").click(function () {
-
+        var trim=$("#frm").serialize();
+        $.ajax({
+            url:"${pageContext.request.contextPath}/stuAction/doUpdate",
+            type:"post",
+            data:trim,
+            timeout:3000,
+            success:function (result) {
+                alert("修改成功");
+                location.href="${pageContext.request.contextPath}/stuList.jsp";
+            },
+            error:function () {
+                alert("修改失败");
+            }
+        });
     });
 </script>

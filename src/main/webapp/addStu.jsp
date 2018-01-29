@@ -22,7 +22,9 @@
                     <option value="">请选择班级</option>
                  </select><br/>
         <input type="button" value="添加" id="btn">
+        <a href="stuList.jsp">首页</a>        
     </form>
+
 </body>
 </html>
 <script type="text/javascript">
